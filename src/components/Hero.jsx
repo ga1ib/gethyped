@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import salonVideo      from '../assets/videos/Loop Salontopper.mp4'
 import petrolheadVideo from '../assets/videos/petrolhead-loop.mp4'
@@ -29,6 +29,18 @@ const SPRING = { type: 'spring', stiffness: 280, damping: 22 }
 
 export default function Hero() {
   const [hoveredIdx, setHoveredIdx] = useState(null)
+  const [isSmallScreen, setIsSmallScreen] = useState(false)
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsSmallScreen(window.innerWidth < 640)
+    }
+    
+    checkScreenSize()
+    window.addEventListener('resize', checkScreenSize)
+    
+    return () => window.removeEventListener('resize', checkScreenSize)
+  }, [])
 
   return (
     <header
@@ -42,13 +54,12 @@ export default function Hero() {
 
         {/* ── Headline ── */}
        <h1
-  className=" p-5 text-[4rem] sm:text-[3rem]
+  className="lg:p-5  text-[clamp(2.5rem,7vw,5rem)]
              md:text-[clamp(3rem,7vw,5rem)] mt-5
              lg:text-[clamp(4rem,9vw,7rem)]
              leading-[1.02] tracking-[-0.03em] text-[#1d1d1d]"
 >
-  Get Hyped. Get&nbsp; <br /> Noticed.&nbsp;Get&nbsp;
-  <br className="block md:hidden" /> Results.
+  Get Hyped.<br  className="block lg:hidden md:hidden" /> Get&nbsp; <br  className="hidden lg:block" /> Noticed.<br  className="block lg:hidden md:hidden" />Get&nbsp; Results.
 </h1>
 
         {/* ── Subtitle ── */}
@@ -74,14 +85,23 @@ export default function Hero() {
 
             /*
              * Visibility:
-             *   card 3 (lgOnly)  → hidden until lg (only card 4)
-             *   card 2 (smShow)  → removed - now all cards visible on sm
-             *   others           → always visible
-             *
-             * Overlap margin (mobile-first, scales with card width):
-             *   default: -16px  sm: -20px  md: -28px  lg: -40px
+             *   On small screens: Show only first two cards (indices 0 and 1)
+             *   On medium and up: Show all cards with lgOnly logic
              */
-            const visClass = card.lgOnly ? 'hidden lg:flex' : 'flex'
+            let visClass = 'flex'
+            
+            if (isSmallScreen) {
+              // Show only first two cards on small screens
+              if (i >= 2) {
+                visClass = 'hidden'
+              } else {
+                visClass = 'flex'
+              }
+            } else {
+              // For md and up, use original lgOnly logic
+              visClass = card.lgOnly ? 'hidden lg:flex' : 'flex'
+            }
+
             const marginClass = card.overlap
                               ? '-ml-4 sm:-ml-7 md:-ml-7 lg:-ml-10'
                               : ''

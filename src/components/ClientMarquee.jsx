@@ -31,8 +31,8 @@ export default function ClientMarquee() {
   return (
     <section className="py-20 px-[5vw] bg-[#FAF4EC] overflow-hidden">
       <div className="w-full mx-auto mb-12">
-        <h2 className="text-[clamp(2rem,4.5vw,2.8rem)] text-left font-bold text-black">
-          These brands<br className="hidden sm:block md:hidden" /> got hyped.
+        <h2 className="text-[clamp(2.5rem,4.5vw,2.8rem)] text-left font-bold text-black">
+          These brands<br className=" md:hidden" /> got hyped.
         </h2>
       </div>
 
@@ -50,7 +50,7 @@ export default function ClientMarquee() {
                 <img
                   src={src}
                   alt={alt}
-                  className="w-20 h-20 sm:w-40 sm:h-40 md:w-40 md:h-40 lg:w-64 lg:h-64 
+                  className="w-48 h-48 sm:w-40 sm:h-40 md:w-40 md:h-40 lg:w-64 lg:h-64 
                              object-contain p-4"
                 />
               </div>
