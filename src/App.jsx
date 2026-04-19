@@ -1,15 +1,5 @@
-import HeroSection from './components/HeroSection'
-import ExpertiseSection from './components/ExpertiseSection'
-import './App.css'
+import Home from './pages/Home'
 
-function App() {
-
-  return (
-    <main className="page">
-      <HeroSection />
-      <ExpertiseSection />
-    </main>
-  )
+export default function App() {
+  return <Home />
 }
-
-export default App
